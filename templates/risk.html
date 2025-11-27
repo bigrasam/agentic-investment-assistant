@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Investment Decision Assistant</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        background: #0f0f0f;
+        color: #e6e6e6;
+        font-family: "Segoe UI", Arial, sans-serif;
+        overflow-x: hidden;
+      }
+
+      header {
+        width: 100%;
+        padding: 20px 30px;
+        background: #0f0f0f;
+        color: #ffffff;
+        font-size: 26px;
+        font-weight: 600;
+        border-bottom: 1px solid #1f1f1f;
+        box-sizing: border-box;
+      }
+
+      footer {
+        width: 100%;
+        padding: 12px 20px;
+        background: #0f0f0f;
+        color: #7a7a7a;
+        text-align: center;
+        border-top: 1px solid #1f1f1f;
+        font-size: 13px;
+        box-sizing: border-box;
+      }
+
+      .content-area {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        box-sizing: border-box;
+      }
+
+      #chat-box {
+        flex-grow: 1;
+        padding: 20px 0;
+        background: transparent;
+      }
+
+      .msg {
+        margin: 14px 0;
+        padding: 14px 18px;
+        border-radius: 14px;
+        font-size: 15px;
+        max-width: 90%;
+        white-space: pre-line;
+      }
+
+      .user {
+        background: #1f1f1f;
+        color: #ffffff;
+        margin-left: auto;
+        border: 1px solid #2b2b2b;
+      }
+
+      .agent {
+        background: #252525;
+        border: 1px solid #333333;
+        color: #e6e6e6;
+      }
+
+      .input-group {
+        display: flex;
+        gap: 12px;
+        margin-top: 18px;
+        background: #1a1a1a;
+        padding: 10px 14px;
+        border-radius: 16px;
+        border: 1px solid #2e2e2e;
+        box-sizing: border-box;
+      }
+
+      input {
+        flex-grow: 1;
+        padding: 12px;
+        border-radius: 12px;
+        border: none;
+        background: #121212;
+        color: #e6e6e6;
+        font-size: 15px;
+      }
+
+      input:focus {
+        outline: none;
+        border: 1px solid #3f8bfd;
+      }
+
+      button {
+        padding: 12px 20px;
+        background: #1f1f1f;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        color: #ffffff;
+        font-weight: 600;
+        font-size: 15px;
+        transition: 0.2s;
+      }
+
+      button:hover {
+        background: #60a5fa;
+        transform: translateY(-2px);
+      }
+
+      #spinner {
+        display: none;
+        margin-top: 40px;
+        align-self: center;
+        border: 6px solid #333;
+        border-top: 6px solid #3b82f6;
+        border-radius: 50%;
+        width: 55px;
+        height: 55px;
+        animation: spin 0.8s linear infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      #final-output {
+        display: none;
+        margin-top: 20px;
+        padding: 20px;
+        background: #1a1a1a;
+        border-radius: 14px;
+        border: 1px solid #2a2a2a;
+        white-space: pre-line;
+        font-size: 16px;
+        line-height: 1.6;
+        color: #e6e6e6;
+        box-sizing: border-box;
+      }
+
+      #done-bar {
+        display: none;
+        margin-top: 20px;
+      }
+
+      .done-box {
+        display: flex;
+        justify-content: flex-end;
+      }
+
+      .pretty-btn {
+        background: #1f1f1f;
+        color: #fff;
+        border-radius: 9999px;
+        padding: 12px 30px;
+        cursor: pointer;
+        border: none;
+        font-size: 15px;
+        font-weight: 600;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+      }
+
+      .pretty-btn:hover {
+        background: #535050;
+        transform: translateY(-2px);
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>Behavior Profile Analyst</header>
+
+    <div class="content-area">
+      <div id="chat-box"></div>
+      <div id="spinner"></div>
+      <div id="final-output"></div>
+
+      <div class="input-group" id="input-area">
+        <input id="user-input" placeholder="" />
+        <button onclick="sendMessage()">Send</button>
+      </div>
+
+      <div id="done-bar">
+        <div class="done-box">
+          <button class="pretty-btn" onclick="goToSentiment()">
+            Next → Market Sentiment Analyst
+          </button>
+        </div>
+      </div>
+    </div>
+    <footer>Investment Assistance Agent | Powered by Rasam © 2025</footer>
+    <script>
+      if (performance.navigation.type === performance.navigation.TYPE_RELOAD) {
+        window.location.href = "/";
+      }
+      if (!localStorage.getItem("session_id")) {
+        localStorage.setItem(
+          "session_id",
+          "s_" + Math.random().toString(36).substr(2, 9)
+        );
+      }
+      const sessionId = localStorage.getItem("session_id");
+      window.onload = function () {
+        addMessage(
+          "agent",
+          " \n First, I want to ask simple questions about your experience in the financial markets. \n\n" +
+            "When you are ready, type: Ready"
+        );
+        document
+          .getElementById("user-input")
+          .addEventListener("keypress", (evt) => {
+            if (evt.key === "Enter") sendMessage();
+          });
+      };
+      async function sendMessage() {
+        const input = document.getElementById("user-input");
+        const message = input.value.trim();
+        if (!message) return;
+
+        addMessage("user", message);
+        input.value = "";
+
+        const res = await fetch("/risk", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message, session_id: sessionId }),
+        });
+
+        const data = await res.json();
+
+        if (data.response.startsWith("EXIT_TO_WELCOME")) {
+          window.location.href = "/";
+          return;
+        }
+
+        if (!data.is_complete) {
+          addMessage("agent", data.response);
+          return;
+        }
+        runFinalSequence(data.response);
+      }
+      function addMessage(role, text) {
+        const box = document.getElementById("chat-box");
+        const div = document.createElement("div");
+        div.className = "msg " + role;
+
+        div.innerHTML =
+          (role === "user" ? "<b>You:</b><br>" : "<b>Agent:</b><br>") + text;
+
+        box.appendChild(div);
+        setTimeout(() => {
+          window.scrollTo({
+            top: document.documentElement.scrollHeight,
+            behavior: "smooth",
+          });
+        }, 0);
+        box.scrollTop = box.scrollHeight;
+      }
+
+      async function runFinalSequence(summaryHtml) {
+        const chatBox = document.getElementById("chat-box");
+        const inputArea = document.getElementById("input-area");
+        const spinner = document.getElementById("spinner");
+        const finalOutput = document.getElementById("final-output");
+        const doneBar = document.getElementById("done-bar");
+
+        chatBox.style.display = "none";
+        inputArea.style.display = "none";
+
+        finalOutput.style.display = "none";
+        doneBar.style.display = "none";
+
+        spinner.style.display = "block";
+
+        await new Promise((resolve) => setTimeout(resolve, 15000));
+
+        spinner.style.display = "none";
+        finalOutput.style.display = "block";
+        finalOutput.innerHTML = summaryHtml;
+
+        doneBar.style.display = "block";
+      }
+
+      function goToSentiment() {
+        window.location.href = "/sentiment";
+      }
+    </script>
+  </body>
+</html>

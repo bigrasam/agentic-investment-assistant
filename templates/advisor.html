@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Investment Decision Assistant</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        background: #0f0f0f;
+        color: #e6e6e6;
+        font-family: "Segoe UI", Arial, sans-serif;
+        overflow-x: hidden;
+      }
+      header {
+        width: 100%;
+        padding: 20px 30px;
+        background: #0f0f0f;
+        color: #ffffff;
+        font-size: 26px;
+        font-weight: 600;
+        border-bottom: 1px solid #1f1f1f;
+        box-sizing: border-box;
+      }
+      footer {
+        width: 100%;
+        padding: 12px 20px;
+        background: #0f0f0f;
+        color: #7a7a7a;
+        text-align: center;
+        border-top: 1px solid #1f1f1f;
+        font-size: 13px;
+        box-sizing: border-box;
+      }
+
+      .content-area {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        box-sizing: border-box;
+      }
+
+      h2 {
+        font-size: 40px;
+        font-weight: 700;
+        color: #ffffff;
+        margin-bottom: 16px;
+      }
+
+      .step {
+        color: #d0d0d0;
+        font-size: 16px;
+        margin-bottom: 20px;
+        line-height: 1.6;
+      }
+
+      #output-box {
+        margin-top: 20px;
+        padding: 20px;
+        background: #1a1a1a;
+        border-radius: 14px;
+        border: 1px solid #2a2a2a;
+        white-space: pre-line;
+        font-size: 16px;
+        line-height: 1.6;
+        color: #e6e6e6;
+        display: none;
+      }
+
+      .pretty-btn {
+        background: #1f1f1f;
+        color: #ffffff;
+        border-radius: 9999px;
+        padding: 12px 30px;
+        border: none;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 15px;
+        transition: 0.2s;
+      }
+
+      .pretty-btn:hover {
+        background: #535050;
+        transform: translateY(-2px);
+      }
+
+      #bottom-bar {
+        display: none;
+        margin-top: 30px;
+      }
+
+      .done-box {
+        display: flex;
+        justify-content: flex-end;
+      }
+
+      #spinner {
+        display: none;
+        margin-top: 40px;
+        align-self: center;
+        border: 6px solid #333333;
+        border-top: 6px solid #3b82f6;
+        border-radius: 50%;
+        width: 55px;
+        height: 55px;
+        animation: spin 0.8s linear infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>Insight Interpreter</header>
+
+    <div class="content-area">
+      <p class="step">
+        Based on your responses and the current market situation of the asset
+        you plan to invest in, the following insight may help you as a
+        complementary resource.
+      </p>
+
+      <div style="text-align: center; margin-top: 25px">
+        <button class="pretty-btn" id="generate-btn" onclick="runAdvisor()">
+          Generate Report
+        </button>
+      </div>
+
+      <div id="spinner"></div>
+      <div id="output-box"></div>
+      <div id="bottom-bar">
+        <div class="done-box">
+          <button class="pretty-btn" onclick="closeSession()">
+            Close Report
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <footer>Investment Assistance Agent | Powered by Rasam © 2025</footer>
+    <script>
+      if (performance.navigation.type === performance.navigation.TYPE_RELOAD) {
+        window.location.href = "/";
+      }
+
+      if (!localStorage.getItem("session_id")) {
+        localStorage.setItem(
+          "session_id",
+          "s_" + Math.random().toString(36).substr(2, 9)
+        );
+      }
+
+      const sessionId = localStorage.getItem("session_id");
+
+      async function runAdvisor() {
+        const button = document.getElementById("generate-btn");
+        const spinner = document.getElementById("spinner");
+        const output = document.getElementById("output-box");
+        const bottomBar = document.getElementById("bottom-bar");
+
+        button.style.display = "none";
+        output.style.display = "none";
+        bottomBar.style.display = "none";
+
+        spinner.style.display = "block";
+
+        const res = await fetch("/advisor", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            message: "Generate combined insight",
+            session_id: sessionId,
+          }),
+        });
+
+        const data = await res.json();
+
+        spinner.style.display = "none";
+
+        output.style.display = "block";
+        output.innerHTML =
+          data.response +
+          '<br><br><b style="color:#3b82f6; font-size:10px;">Disclaimer: This report reflects your behavior profile and market sentiment insights. It is NOT financial advice.</b>';
+        bottomBar.style.display = "block";
+        setTimeout(() => {
+          window.scrollTo({
+            top: document.documentElement.scrollHeight,
+            behavior: "smooth",
+          });
+        }, 0);
+      }
+      function closeSession() {
+        localStorage.removeItem("session_id");
+        window.location.href = "/";
+      }
+    </script>
+  </body>
+</html>
