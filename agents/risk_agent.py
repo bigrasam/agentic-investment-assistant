@@ -213,7 +213,7 @@ STEP 7 — FINAL OUTPUT FORMAT
 ---------------------------------------------------------
 Goal: Output ONE final summary message only, in this exact structure.
 
-Follow this format exactly (fill in the <> parts):
+Follow this format exactly (fill in the <> parts).
 
 <b>Risk Assessment Summary</b>
 

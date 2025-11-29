@@ -1,4 +1,3 @@
-
 #  Investment Decision Assistant
 ### *A Multi-Agent System for Behavioral Risk Profiling, Market Sentiment Analysis, and Integrated Investment Insights*
 
@@ -17,7 +16,7 @@ The goal is to help individuals understand how their **behavioral tendencies** i
 This project is built for the **Kaggle × Google AI Agents Intensive (Capstone Project)** and demonstrates:
 
 - Multi-agent architecture  
-- Sessions & memory (InMemorySessionService + InMemoryMemoryService)  
+- Sessions & memory (InMemorySessionService + InMemoryMemoryService)
 - Agent-to-agent communication  
 - Tool use (Google Search)  
 - Context injection + structured instructions    
@@ -43,24 +42,24 @@ This often leads to **inconsistent decisions** or **emotionally driven reactions
 
 The **Investment Decision Assistant** addresses this by combining:
 
-### ✔ 1. Behavioral Risk Profiling  
+### 1. Behavioral Risk Profiling  
 A structured Q&A session that extracts:
 - Stated risk style  
 - Hidden instincts  
 - Self-awareness level  
 - Behavioral interpretations  
 
-### ✔ 2. Market Sentiment Analysis  
+### 2. Market Sentiment Analysis  
 The agent scans the latest reputable financial news and provides:
 - Overall sentiment  
 - 30-day price movement  
 - Three key evidence points  
 - Sources used  
 
-### ✔ 3. Final Integrated Insight  
+### 3. Final Integrated Insight  
 The system combines your behavioral profile with the current market situation of your chosen asset and generates a structured summary that includes:
 - The user’s behavioral tendencies related to financial decision-making  
-- The current market environment of the selected asset by he user 
+- The current market environment of the selected asset by the user 
 - How these two factors interact, considering the user’s behavioral patterns and the condition of the asset  
 
 This helps users reflect before entering the market.
@@ -69,18 +68,18 @@ This helps users reflect before entering the market.
 
 ##  System Architecture
 
-![System Architecture](images/architecture.png)
+![System Architecture](images/architecture.jpg)
 
 A typical flow:
 
-1. **Risk Assessor Agent** (interactive Q&A)
+1. **Risk Agent** (interactive Q&A)
 2. Saves final summary → memory
 3. **Market Sentiment Agent** (Google Search tool)
 4. Saves sentiment summary → memory
 5. **Advisor Agent**
    - Loads risk summary (from memory)
    - Reads sentiment summary (from backend)
-   - Produces the final integrated insight based on two agents
+   - Produces the final integrated insight based on the two agents
 
 ---
 
@@ -96,17 +95,21 @@ project/
 ├── .gitignore
 │
 ├── agents/
-│   ├── risk_assessor.py
+│   ├── risk_agent.py
 │   ├── sentiment_agent.py
 │   └── advisor_agent.py
 │
 ├── templates/
-    ├── welcome.html
-    ├── risk.html
-    ├── sentiment.html
-    └── advisor.html
-
-
+│   ├── welcome_page.html
+│   ├── risk_page.html
+│   ├── sentiment_page.html
+│   └── advisor_page.html
+│
+├── images/
+│   ├── welcome_screenshot.jpg
+│   ├── risk_screenshot.jpg
+│   ├── sentiment_screenshot.jpg
+│   └── advisor_screenshot.jpg
 ```
 
 ---
@@ -127,8 +130,7 @@ project/
 - Standardized system instructions  
 - Structured formats for all agent outputs  
 
-
-### **Deployment **
+### **Deployment**
 - Works as a FastAPI service  
 - Can be deployed to Cloud Run, Render, or any VM
 
@@ -172,7 +174,7 @@ http://127.0.0.1:8000/
 
 ##  User Experience Flow
 
-![User Flow](images/user_flow.png)
+![User Flow](images/user_flow.jpg)
 
 ### Step 1 — Behavioral Risk  
 User answers between 5–15 behavioral questions  
@@ -190,13 +192,14 @@ Advisor agent produces:
 - Interaction between them  
 - Short human-readable interpretation  
 
+---
 
 ##  Screenshots
 
-![Welcome Screen](images/welcome.png)  
-![Risk Assessment](images/risk.png)  
-![Market Sentiment](images/sentiment.png)  
-![Advisor Output](images/advisor.png)
+![Welcome Screen](images/welcome_screenshot.jpg)  
+![Risk Assessment](images/risk_screenshot.jpg)  
+![Market Sentiment](images/sentiment_screenshot.jpg)  
+![Advisor Output](images/advisor_screenshot.jpg)
 
 ---
 
@@ -215,11 +218,10 @@ The **Investment Decision Assistant** provides:
 - A combined psychological insight  
 
 It showcases the core ideas from the Google Agents Intensive course:  
-**multi-agent reasoning, memory, tools, and context engineering**—all wrapped in a clean, user-friendly web app.
+**multi-agent reasoning, memory, tools, and context engineering**, all included in a clean, user-friendly web app.
 
 ---
 
 ##  Attribution
 Built by **Ras Amirzadeh**  
 For the **Kaggle × Google Agents Intensive Capstone (2025)**
-

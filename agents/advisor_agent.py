@@ -68,8 +68,8 @@ Your final answer MUST contain exactly these sections:
 ────────────────────────────────────────────────────
 STEP 3 — FINAL OUTPUT FORMAT (MANDATORY)
 ────────────────────────────────────────────────────
-Your final answer MUST include all of the following:
-Follow this format exactly (fill in the <> parts):
+Your final answer MUST include all of the following.
+Follow this format exactly (fill in the <> parts).
 
 <b>ADVISOR_SUMMARY</b>:
 

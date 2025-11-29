@@ -118,9 +118,9 @@ No percentages. No forecasts.
 STEP 6 — FINAL STRUCTURED SUMMARY (REQUIRED FORMAT)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Your final answer MUST include all of the following:
+Goal: Your final answer MUST include all of the following.
 
-Follow this format exactly (fill in the <> parts):
+Follow this format exactly (fill in the <> parts).
 
 <b>Overall sentiment</b> <label>
 
