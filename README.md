@@ -57,11 +57,11 @@ The system helps people pause, reflect, and avoid common behavioral mistakes bef
 
 ## Problem Statement
 
-Most retail investors struggle with:
+People often find it challenging to:
 
-- Understanding their true risk tendencies
-- Recognizing how emotions shape decisions
-- Interpreting market sentiment accurately
+- Clearly understand their own risk tendencies
+- Notice how uncertainty and emotion influence their choices
+- Interpret market information in a structured and consistent way
 
 The combination often leads to **emotional reactions**, **poor timing**, and **inconsistent decision‑making**.
 
